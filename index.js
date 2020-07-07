@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 
-//routes
+
 app.get('/',(req,res) => {
     console.log(req.headers.host)
     res.send("It's alive!")
@@ -19,8 +19,14 @@ app.get('/airman', (req, res) => {
 app.get('/airmandata/:id', (req, res) => {
     queries.getAllData(req,res);
 })
+app.get('/allairmandata', (req, res) => {
+    queries.getAllDatawithoutid(req,res);
+})
 app.post('/api/airman', (req,res) =>{
     queries.createNewAirman(req,res);
+})
+app.post('/update/airman/:id', (req,res) =>{
+    queries.updateAirman(req,res);
 })
 app.delete('/api/airman/:id', (req, res)=>
 {

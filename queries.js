@@ -120,6 +120,17 @@ function getAllData(req,res)
         }
     })
 }
+function getAllDatawithoutid(req,res)
+{
+    pool.query("select airman.rank, airman.first_name, airman.last_name, pif_data.airman_id, pif_data.LOC, pif_data.lor, pif_data.loa,pif_data.waps,pif_data.last_review_date, WAPS.pif_data_id, WAPS.time_in_service, WAPS.time_in_grade, WAPS.EPR_data FROM((airman INNER JOIN pif_data ON airman.amn_id = pif_data.airman_id) INNER JOIN WAPS ON pif_data.airman_id = waps.pif_data_id)", (error, results) => {
+        if (error) {
+            console.log(error)
+            res.status(400).send()
+        } else {
+            res.send(results.rows)
+        }
+    })
+}
 function createNewAirman(req,res)
 {
     pool.query("INSERT INTO airman(rank, first_name, last_name) VALUES ($1,$2,$3) ", [req.body.rank, req.body.firstName, req.body.lastName], (error,results) =>
@@ -164,8 +175,24 @@ function deleteAirman(req,res)
         }
     })
 }
+function updateAirman(req,res)
+{
+    pool.query("UPDATE airman SET rank = $1, first_name = $2, last_name = $3 WHERE id = $4",[req.body.rank, req.body.firstName, req.body.lastName, req.params.id], (error,results) =>
+    {
+        if(error)
+        {
+            console.log(error)
+            res.status(400).send()
+        }
+        else{
+            res.status(202).send();
+        }
+    }) 
+}
 
 module.export = pool;
+exports.getAllDatawithoutid = getAllDatawithoutid;
+exports.updateAirman = updateAirman;
 exports.getAllData = getAllData;
 exports.deletePifByID = deletePifByID;
 exports.deleteAirman = deleteAirman;
