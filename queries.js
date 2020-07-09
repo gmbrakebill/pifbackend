@@ -133,7 +133,7 @@ function getAllDatawithoutid(req,res)
 }
 function createNewAirman(req,res)
 {
-    pool.query("INSERT INTO airman(rank, first_name, last_name) VALUES ($1,$2,$3) ", [req.body.rank, req.body.firstName, req.body.lastName], (error,results) =>
+    pool.query("INSERT INTO airman (rank, first_name, last_name) VALUES ($1,$2,$3) ", [req.body.rank, req.body.firstName, req.body.lastName], (error,results) =>
     {
         if(error)
         {
@@ -149,6 +149,21 @@ function createNewAirman(req,res)
 function createNewWaps(req,res)
 {
     pool.query("INSERT INTO WAPS(time_in_service, time_in_grade, EPR) VALUES ($1,$2,$3) ", [req.body.rank, req.body.firstName, req.body.lastName], (error,results) =>
+    {
+        if(error)
+        {
+            console.log(error)
+            res.status(400).send()
+        }
+        else{
+            res.status(201).send();
+        }
+
+    })
+}
+function createNewPif(req,res)
+{
+    pool.query("INSERT INTO pif_data(LOC, LOR, LOA, WAPS, last_review_date) VALUES ($1,$2,$3,$4,$5) ", [req.body.LOC, req.body.LOR, req.body.LOA, req.body.WAPS, req.body.last_review_date], (error,results) =>
     {
         if(error)
         {
@@ -191,6 +206,7 @@ function updateAirman(req,res)
 }
 
 module.export = pool;
+exports.createNewPif = createNewPif;
 exports.getAllDatawithoutid = getAllDatawithoutid;
 exports.updateAirman = updateAirman;
 exports.getAllData = getAllData;

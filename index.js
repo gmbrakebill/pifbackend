@@ -22,7 +22,7 @@ app.get('/airmandata/:id', (req, res) => {
 app.get('/allairmandata', (req, res) => {
     queries.getAllDatawithoutid(req,res);
 })
-app.post('/api/airman', (req,res) =>{
+app.post('/airman', (req,res) =>{
     queries.createNewAirman(req,res);
 })
 app.post('/update/airman/:id', (req,res) =>{
@@ -34,6 +34,9 @@ app.delete('/api/airman/:id', (req, res)=>
 })
 app.get('/pif', (req, res) => {
     queries.getPIFData(req,res);
+})
+app.post('/api/pif', (req,res) =>{
+    queries.createNewPif(req,res);
 })
 app.post('/api/waps', (req,res) =>{
     queries.createNewWaps(req,res);
